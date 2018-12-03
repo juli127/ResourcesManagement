@@ -5,6 +5,7 @@ import com.gmail.kramarenko104.entity.UserActionLogRecord;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -25,7 +26,6 @@ public class UserActionsLogService {
         em.getTransaction().begin();
 
         UserActionLogRecord record  = new UserActionLogRecord();
-        record.setId(user.getId());
         record.setActionDate(actionDate);
         record.setDescription(description);
         em.merge(record);

@@ -3,16 +3,12 @@ package com.gmail.kramarenko104;
 import com.gmail.kramarenko104.service.*;
 import com.gmail.kramarenko104.entity.*;
 import org.apache.log4j.PropertyConfigurator;
-import javax.persistence.EntityManagerFactory;
 
 public class Launcher {
-
-    //private static EntityManagerFactory emf = null;
 
     static {
         PropertyConfigurator.configure(Launcher.class.getResource("/log4j.properties"));
     }
-
 
     public static void main(String[] args) {
 
