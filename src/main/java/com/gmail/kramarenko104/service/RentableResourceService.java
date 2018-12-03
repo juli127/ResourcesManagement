@@ -28,7 +28,7 @@ public class RentableResourceService extends ResourceCommonService {
         em.merge(resource);
         em.getTransaction().commit();
 
-        String description = "Admin added " + amount + " of " + resource.toString();
+        String description = "Admin added " + amount + " of RentableResource " + resource.toString();
         log.recordUserAction(user, new Date(), description);
     }
 

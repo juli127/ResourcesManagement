@@ -43,7 +43,8 @@ public class ConsumableResourceService extends ResourceCommonService {
 
         String description = "User " + user.toString() +
                 ((tookAmount > 0) ? " consumed ":" couldn't consume ") +
-                consumeAmount + " of " + resource.toString();
+                consumeAmount + " of " + resource.toString() +
+                ((resource.getLeftAmount() == 0) ? ".... NOTHING LEFT !!! NEED TO BUY?": "");
         log.recordUserAction(user, new Date(), description);
     }
 
