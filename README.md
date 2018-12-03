@@ -1,1 +1,2 @@
-# ResourcesManagement
+# ResourcesManagement system:
+uses Hibernate, JPA
