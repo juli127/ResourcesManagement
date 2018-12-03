@@ -10,15 +10,11 @@ import java.util.Date;
 
 public class RentableResourceService {
 
-    private static EntityManagerFactory emf = null;
-
+    EntityManager em;
     UserActionsLogService log;
 
-    static {
-        emf = Persistence.createEntityManagerFactory("persistenceUnits.resourcesManagement");
-    }
-
-    public RentableResourceService(UserActionsLogService log) {
+    public RentableResourceService(UserActionsLogService log, EntityManager em){
+        this.em = em;
         this.log = log;
     }
 
@@ -26,7 +22,6 @@ public class RentableResourceService {
         String description = "Admin is going to add Rentable Resource: " + amount + " of" + resource.toString();
         log.recordUserAction(user, new Date(), description);
 
-        final EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         resource.setLeftAmount(resource.getLeftAmount() + amount);
         resource.setTotalAmount(resource.getTotalAmount() + amount);
@@ -38,7 +33,6 @@ public class RentableResourceService {
     }
 
     public RentableResource getRentableResourceById(int id) {
-        EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         try {
             String queryText = "select e from RentableResource e where e.id = :id";

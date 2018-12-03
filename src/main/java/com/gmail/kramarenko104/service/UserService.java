@@ -7,18 +7,13 @@ import javax.persistence.Persistence;
 
 public class UserService {
 
-    private static EntityManagerFactory emf = null;
+    EntityManager em;
 
-    static {
-        emf = Persistence.createEntityManagerFactory("persistenceUnits.resourcesManagement");
-    }
-
-    public UserService(){
-        init ();
+    public UserService(EntityManager em){
+        this.em = em;
     }
 
     public User getUser(int id) {
-        final EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         try {
             return em.find(User.class, id);
@@ -28,31 +23,12 @@ public class UserService {
     }
 
     public void saveUser(User user) {
-        final EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.merge(user);
+        em.flush();
         em.getTransaction().commit();
     }
 
-    private void init() {
 
-        final User admin = new User();
-        admin.setId(1);
-        admin.setName("admin");
-        admin.setIpAddress("192.168.95.1");
-        saveUser(admin);
-
-        final User user1 = new User();
-        user1.setId(2);
-        user1.setName("Ivanov Ivan Ivanovich");
-        user1.setIpAddress("192.168.95.3");
-        saveUser(user1);
-
-        final User user2 = new User();
-        user2.setId(3);
-        user2.setName("Petrenko Vasyl Nikolaevich");
-        user2.setIpAddress("192.168.93.2");
-        saveUser(user2);
-    }
 
 }

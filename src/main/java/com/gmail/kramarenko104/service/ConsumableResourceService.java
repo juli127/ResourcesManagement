@@ -14,15 +14,13 @@ import java.util.List;
 
 public class ConsumableResourceService {
 
-    private static EntityManagerFactory emf = null;
-
-    static {
-        emf = Persistence.createEntityManagerFactory("persistenceUnits.resourcesManagement");
-    }
-
+    EntityManager em;
     UserActionsLogService log;
 
-    public ConsumableResourceService(UserActionsLogService log) {
+    public ConsumableResourceService(){}
+
+    public ConsumableResourceService(UserActionsLogService log, EntityManager em){
+        this.em = em;
         this.log = log;
     }
 
@@ -30,7 +28,6 @@ public class ConsumableResourceService {
         String description = "Admin is going to add " + amount + " of ConsumableResource " + resource.toString();
         log.recordUserAction(user, new Date(), description);
 
-        final EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         resource.setLeftAmount(resource.getLeftAmount() + amount);
         em.merge(resource);
@@ -45,7 +42,6 @@ public class ConsumableResourceService {
         log.recordUserAction(user, new Date(), description);
 
         boolean success = false;
-        final EntityManager em = emf.createEntityManager();
 //        int idResource = resource.getId();
 //        ConsumableResource changedResource = getConsumableResource(idResource);
         em.getTransaction().begin();
@@ -63,7 +59,6 @@ public class ConsumableResourceService {
     }
 
     public ConsumableResource getConsumableResource(int id) {
-        final EntityManager em = emf.createEntityManager();
         ConsumableResource gotRes  = null;
         em.getTransaction().begin();
         try {
@@ -77,8 +72,6 @@ public class ConsumableResourceService {
 
     /////////////////////////////////////////////////////////////////
     public List<ConsumableResource> listResourcesForConsumption(){
-
-        final EntityManager em = emf.createEntityManager();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<ConsumableResource> cq = cb.createQuery(ConsumableResource.class);

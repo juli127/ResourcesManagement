@@ -1,6 +1,7 @@
 package com.gmail.kramarenko104.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class User {
 
     private String ipAddress;
 
-    @OneToMany (fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany (mappedBy = "user")
     List<UserActionLogRecord> records;
 
     public User() {

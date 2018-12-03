@@ -1,12 +1,13 @@
 package com.gmail.kramarenko104.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
 @Entity
 @Table (name = "log_records")
-public class UserActionLogRecord{
+public class UserActionLogRecord {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
@@ -19,7 +20,8 @@ public class UserActionLogRecord{
     @ElementCollection
     private Map<String, String> properties;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name="user_id", insertable = true, updatable = true)
     private User user;
 
     public UserActionLogRecord(){}
