@@ -1,26 +1,26 @@
 package com.gmail.kramarenko104.service;
 
+import com.gmail.kramarenko104.entity.ConsumableResource;
 import com.gmail.kramarenko104.entity.RentableResource;
 import com.gmail.kramarenko104.entity.User;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.Date;
 
-public class RentableResourceService {
+public class RentableResourceService extends ResourceCommonService {
 
     EntityManager em;
     UserActionsLogService log;
 
+    public RentableResourceService(){}
+
     public RentableResourceService(UserActionsLogService log, EntityManager em){
+        super(log, em);
         this.em = em;
         this.log = log;
     }
 
     public void addResourceToInventory(User user, RentableResource resource, int amount) {
-        String description = "Admin is going to add Rentable Resource: " + amount + " of " + resource.toString();
-        log.recordUserAction(user, new Date(), description);
 
         em.getTransaction().begin();
         resource.setLeftAmount(resource.getLeftAmount() + amount);
@@ -28,7 +28,21 @@ public class RentableResourceService {
         em.merge(resource);
         em.getTransaction().commit();
 
-        description = "Admin added " + amount + " of " + resource.toString();
+        String description = "Admin added " + amount + " of " + resource.toString();
+        log.recordUserAction(user, new Date(), description);
+    }
+
+    public void rentResource(User user, RentableResource resource, int rentAmount){
+        em.getTransaction().begin();
+        int tookAmount = resource.takeResource(rentAmount);
+        if (tookAmount > 0) {
+            em.merge(resource);
+        }
+        em.getTransaction().commit();
+
+        String description = "User " + user.toString() +
+                ((tookAmount > 0) ? " rented ":" couldn't rent ") +
+                rentAmount + " of " + resource.toString();
         log.recordUserAction(user, new Date(), description);
     }
 

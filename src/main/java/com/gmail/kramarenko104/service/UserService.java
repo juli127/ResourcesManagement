@@ -23,7 +23,6 @@ public class UserService {
     public void saveUser(User user) {
         em.getTransaction().begin();
         em.merge(user);
-        em.flush();
         em.getTransaction().commit();
     }
 

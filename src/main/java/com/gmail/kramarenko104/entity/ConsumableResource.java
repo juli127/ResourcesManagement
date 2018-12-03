@@ -13,12 +13,15 @@ public class ConsumableResource extends Resource {
         super();
     }
 
-    public int getConsumed() {
-        return consumedAmount;
+    @Override
+    public int takeResource(int takeAmount) {
+        int tookAmount = super.takeResource(takeAmount);
+        consumedAmount += tookAmount;
+        return tookAmount;
     }
 
-    public void setConsumed(int consumedAmount) {
-        this.consumedAmount = consumedAmount;
+    public int getConsumed() {
+        return consumedAmount;
     }
 
 }

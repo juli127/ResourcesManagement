@@ -5,13 +5,13 @@ import javax.persistence.*;
 @Entity
 @Table (name = "resources")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Resource {
+public abstract class Resource {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    private int leftAmount;
+    protected int leftAmount;
 
     public Resource(){}
 
@@ -37,6 +37,20 @@ public class Resource {
 
     public void setLeftAmount(int leftAmount) {
         this.leftAmount = leftAmount;
+    }
+
+    public int takeResource(int takeAmount) {
+        int tookAmount  = 0;
+        if (leftAmount > 0 && takeAmount > 0) {
+            if (leftAmount >= takeAmount) {
+                leftAmount -= takeAmount;
+                tookAmount = takeAmount;
+            } else {
+                tookAmount = leftAmount;
+                leftAmount = 0;
+            }
+        }
+        return tookAmount;
     }
 
     @Override

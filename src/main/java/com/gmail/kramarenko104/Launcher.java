@@ -45,14 +45,17 @@ public class Launcher {
 
         // all these actions should be added to log
         ConsumableResource consRes1 = new ConsumableResource();
+        consRes1.setId(1);
         consRes1.setName("Parker pen");
         consServ.replenishResource(admin, consRes1, 128);
 
         ConsumableResource consRes2 = new ConsumableResource();
+        consRes2.setId(2);
         consRes2.setName("A4 paper block");
         consServ.replenishResource(admin, consRes2, 245);
 
         ConsumableResource consRes3 = new ConsumableResource();
+        consRes3.setId(3);
         consRes3.setName("A4 folder");
         consServ.replenishResource(admin, consRes3, 355);
 
@@ -60,24 +63,27 @@ public class Launcher {
         RentableResourceService rentServ = new RentableResourceService(log, em);
 
         // all these actions should be added to log
-        RentableResource rentRes = new RentableResource();
-        rentRes.setName("table");
-        rentServ.addResourceToInventory(admin, rentRes, 345);
+        RentableResource rentRes1 = new RentableResource();
+        rentRes1.setName("table");
+        rentServ.addResourceToInventory(admin, rentRes1, 345);
 
-        rentRes = new RentableResource();
-        rentRes.setName("computer ASUS-34");
-        rentServ.addResourceToInventory(admin, rentRes, 89);
+        RentableResource rentRes2 = new RentableResource();
+        rentRes2.setName("computer ASUS-34");
+        rentServ.addResourceToInventory(admin, rentRes2, 89);
 
-        rentRes = new RentableResource();
-        rentRes.setName("book1");
-        rentServ.addResourceToInventory(admin, rentRes, 2);
+        RentableResource rentRes3 = new RentableResource();
+        rentRes3.setName("book1");
+        rentServ.addResourceToInventory(admin, rentRes3, 2);
 
         //////////////////////////////////////////////////////////////
         // user asks ConsumableResource, save request from user
         /// this action should be added to log
         consServ.consumeResource(user1, consRes1, 7);
-        consServ.consumeResource(user2, consRes3, 5);
+        consServ.consumeResource(user2, consRes1, 5);
+        consServ.consumeResource(admin, consRes1, 150);
 
+        rentServ.rentResource(user1, rentRes2, 1);
+       // rentServ.rentResource(user2, rentRes3, 3);
 
     }
 

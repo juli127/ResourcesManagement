@@ -9,7 +9,7 @@ import javax.persistence.criteria.Root;
 import java.util.Date;
 import java.util.List;
 
-public class ConsumableResourceService {
+public class ConsumableResourceService extends ResourceCommonService {
 
     EntityManager em;
     UserActionsLogService log;
@@ -17,45 +17,37 @@ public class ConsumableResourceService {
     public ConsumableResourceService(){}
 
     public ConsumableResourceService(UserActionsLogService log, EntityManager em){
+        super(log, em);
         this.em = em;
         this.log = log;
     }
 
     public void replenishResource(User user, ConsumableResource resource, int amount){
-        String description = "Admin is going to add " + amount + " of ConsumableResource " + resource.toString();
-        log.recordUserAction(user, new Date(), description);
 
         em.getTransaction().begin();
         resource.setLeftAmount(resource.getLeftAmount() + amount);
         em.merge(resource);
         em.getTransaction().commit();
 
-        description = "Admin added " + amount + " of ConsumableResource " + resource.toString();
+        String description = "Admin added " + amount + " of ConsumableResource " + resource.toString();
         log.recordUserAction(user, new Date(), description);
     }
 
-    public void consumeResource(User user, ConsumableResource resource, int amount){
-        String description = "User " + user.toString() + " tries to consume " + amount + " of " + resource.toString();
-        log.recordUserAction(user, new Date(), description);
-
-        boolean success = false;
-//        int idResource = resource.getId();
-//        ConsumableResource changedResource = getConsumableResource(idResource);
+    public void consumeResource(User user, ConsumableResource resource, int consumeAmount){
         em.getTransaction().begin();
-        int left = resource.getLeftAmount();
-        if (left >= amount){
-            resource.setConsumed(resource.getConsumed() + amount);
-            resource.setLeftAmount(left - amount);
-            success = true;
+        int tookAmount = resource.takeResource(consumeAmount);
+        if (tookAmount > 0) {
+            em.merge(resource);
         }
-        em.merge(resource);
         em.getTransaction().commit();
 
-        description = "User " + user.toString() + (success?" consumed ":" couldn't consume ") + amount + " of " + resource.toString();
+        String description = "User " + user.toString() +
+                ((tookAmount > 0) ? " consumed ":" couldn't consume ") +
+                consumeAmount + " of " + resource.toString();
         log.recordUserAction(user, new Date(), description);
     }
 
-    public ConsumableResource getConsumableResource(int id) {
+    public ConsumableResource getConsumableResourcebyID(int id) {
         ConsumableResource gotRes  = null;
         em.getTransaction().begin();
         try {
