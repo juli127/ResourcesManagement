@@ -2,10 +2,7 @@ package com.gmail.kramarenko104.service;
 
 import com.gmail.kramarenko104.entity.ConsumableResource;
 import com.gmail.kramarenko104.entity.User;
-import org.springframework.transaction.annotation.Propagation;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;

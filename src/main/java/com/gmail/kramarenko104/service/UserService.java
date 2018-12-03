@@ -2,8 +2,6 @@ package com.gmail.kramarenko104.service;
 
 import com.gmail.kramarenko104.entity.User;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 public class UserService {
 

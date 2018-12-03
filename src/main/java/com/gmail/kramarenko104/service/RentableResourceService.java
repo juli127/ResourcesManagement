@@ -19,7 +19,7 @@ public class RentableResourceService {
     }
 
     public void addResourceToInventory(User user, RentableResource resource, int amount) {
-        String description = "Admin is going to add Rentable Resource: " + amount + " of" + resource.toString();
+        String description = "Admin is going to add Rentable Resource: " + amount + " of " + resource.toString();
         log.recordUserAction(user, new Date(), description);
 
         em.getTransaction().begin();
@@ -28,7 +28,7 @@ public class RentableResourceService {
         em.merge(resource);
         em.getTransaction().commit();
 
-        description = "Was added " + amount + " of " + resource.toString();
+        description = "Admin added " + amount + " of " + resource.toString();
         log.recordUserAction(user, new Date(), description);
     }
 

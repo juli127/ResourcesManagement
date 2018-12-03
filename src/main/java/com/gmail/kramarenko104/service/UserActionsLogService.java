@@ -17,7 +17,7 @@ public class UserActionsLogService {
         this.em = em;
     }
 
-    //@Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public UserActionLogRecord recordUserAction(User user, Date actionDate, String description){
 
         em.getTransaction().begin();

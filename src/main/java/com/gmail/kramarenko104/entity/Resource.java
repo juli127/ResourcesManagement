@@ -1,7 +1,6 @@
 package com.gmail.kramarenko104.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table (name = "resources")
