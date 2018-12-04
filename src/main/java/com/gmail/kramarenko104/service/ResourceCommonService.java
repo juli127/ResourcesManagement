@@ -23,4 +23,11 @@ public abstract class ResourceCommonService {
         em.getTransaction().commit();
         return tookAmount;
     }
+
+    public void addResource(Resource resource, int addAmount){
+        em.getTransaction().begin();
+        resource.addResource(addAmount);
+        em.merge(resource);
+        em.getTransaction().commit();
+    }
 }

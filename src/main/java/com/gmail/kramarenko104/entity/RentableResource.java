@@ -21,4 +21,9 @@ public class RentableResource extends Resource {
         return totalAmount;
     }
 
+    @Override
+    public void addResource(int addAmount) {
+        super.addResource(addAmount);
+        totalAmount += addAmount;
+    }
 }

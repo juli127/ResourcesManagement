@@ -1,6 +1,5 @@
 package com.gmail.kramarenko104.service;
 
-import com.gmail.kramarenko104.entity.ConsumableResource;
 import com.gmail.kramarenko104.entity.RentableResource;
 import com.gmail.kramarenko104.entity.User;
 import javax.persistence.EntityManager;
@@ -21,28 +20,19 @@ public class RentableResourceService extends ResourceCommonService {
     }
 
     public void addResourceToInventory(User user, RentableResource resource, int amount) {
-
-        em.getTransaction().begin();
-        resource.setLeftAmount(resource.getLeftAmount() + amount);
-        resource.setTotalAmount(resource.getTotalAmount() + amount);
-        em.merge(resource);
-        em.getTransaction().commit();
-
-        String description = "Admin added " + amount + " of RentableResource " + resource.toString();
+        super.addResource(resource, amount);
+        String description = "Admin added " + amount +
+                " of RentableResource " + resource.toString() +
+                ". Total count now: " + resource.getLeftAmount();
         log.recordUserAction(user, new Date(), description);
     }
 
     public void rentResource(User user, RentableResource resource, int rentAmount){
-        em.getTransaction().begin();
-        int tookAmount = resource.takeResource(rentAmount);
-        if (tookAmount > 0) {
-            em.merge(resource);
-        }
-        em.getTransaction().commit();
-
+        int tookAmount = super.getResource(resource, rentAmount);
         String description = "User " + user.toString() +
                 ((tookAmount > 0) ? " rented ":" couldn't rent ") +
-                rentAmount + " of " + resource.toString();
+                rentAmount + " of " + resource.toString()+
+                ((resource.getLeftAmount() == 0) ? ".... NOTHING LEFT !!! NEED TO BUY?": "");
         log.recordUserAction(user, new Date(), description);
     }
 

@@ -23,30 +23,23 @@ public class ConsumableResourceService extends ResourceCommonService {
     }
 
     public void replenishResource(User user, ConsumableResource resource, int amount){
-
-        em.getTransaction().begin();
-        resource.setLeftAmount(resource.getLeftAmount() + amount);
-        em.merge(resource);
-        em.getTransaction().commit();
-
-        String description = "Admin added " + amount + " of ConsumableResource " + resource.toString();
+        super.addResource(resource, amount);
+        String description = "Admin added " + amount +
+                " of ConsumableResource " + resource.toString() +
+                ". Total count now: " + resource.getLeftAmount();
         log.recordUserAction(user, new Date(), description);
     }
 
-    public void consumeResource(User user, ConsumableResource resource, int consumeAmount){
-        em.getTransaction().begin();
-        int tookAmount = resource.takeResource(consumeAmount);
-        if (tookAmount > 0) {
-            em.merge(resource);
-        }
-        em.getTransaction().commit();
 
+    public void consumeResource(User user, ConsumableResource resource, int consumeAmount){
+        int tookAmount = super.getResource(resource, consumeAmount);
         String description = "User " + user.toString() +
                 ((tookAmount > 0) ? " consumed ":" couldn't consume ") +
                 consumeAmount + " of " + resource.toString() +
                 ((resource.getLeftAmount() == 0) ? ".... NOTHING LEFT !!! NEED TO BUY?": "");
         log.recordUserAction(user, new Date(), description);
     }
+
 
     public ConsumableResource getConsumableResourcebyID(int id) {
         ConsumableResource gotRes  = null;
