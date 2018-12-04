@@ -3,14 +3,14 @@ package com.gmail.kramarenko104.service;
 import com.gmail.kramarenko104.entity.Resource;
 import javax.persistence.EntityManager;
 
-public abstract class ResourceCommonService {
+public abstract class CommonResourceService {
 
     EntityManager em;
     UserActionsLogService log;
 
-    public ResourceCommonService(){}
+    public CommonResourceService(){}
 
-    public ResourceCommonService(UserActionsLogService log, EntityManager em){
+    public CommonResourceService(UserActionsLogService log, EntityManager em){
         this.em = em;
         this.log = log;
     }

@@ -70,7 +70,7 @@ public class Launcher {
 
         RentableResource rentRes2 = new RentableResource();
         rentRes2.setId(5);
-        rentRes2.setName("computer ASUS-34");
+        rentRes2.setName("LAPTOP-JFR5JK2D");
         rentServ.addResourceToInventory(admin, rentRes2, 89);
 
         RentableResource rentRes3 = new RentableResource();

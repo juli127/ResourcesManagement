@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.Date;
 
-public class RentableResourceService extends ResourceCommonService {
+public class RentableResourceService extends CommonResourceService {
 
     EntityManager em;
     UserActionsLogService log;

@@ -9,7 +9,7 @@ import javax.persistence.criteria.Root;
 import java.util.Date;
 import java.util.List;
 
-public class ConsumableResourceService extends ResourceCommonService {
+public class ConsumableResourceService extends CommonResourceService {
 
     EntityManager em;
     UserActionsLogService log;
