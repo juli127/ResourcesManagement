@@ -89,8 +89,12 @@ public class Launcher {
         rentServ.checkinResource(user1, rentRes2, 1);
         rentServ.writeOffResourceFromInventory(admin, rentRes2, 1);
 
+        // print to log list of all available resources
         CommonResourceService allServ = new CommonResourceService(log, em);
         allServ.printListAllAvailableResources(admin);
+
+        consServ.printListConsumedResources(admin);
+        consServ.printListResourcesForConsumption(admin);
     }
 
 }

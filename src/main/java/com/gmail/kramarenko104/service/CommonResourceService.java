@@ -2,10 +2,8 @@ package com.gmail.kramarenko104.service;
 
 import com.gmail.kramarenko104.entity.Resource;
 import com.gmail.kramarenko104.entity.User;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +42,16 @@ public class CommonResourceService{
         em.getTransaction().commit();
     }
 
+    public List<Resource> listAllAvailableResources(){
+        em.getTransaction().begin();
+        try {
+            TypedQuery<Resource> query = em.createNamedQuery("listAllAvailableResources", Resource.class);
+            return query.getResultList();
+        } finally {
+            em.getTransaction().rollback();
+        }
+    }
+
     public void printListAllAvailableResources(User user){
         List<Resource> allResources = listAllAvailableResources();
         StringBuilder sb = new StringBuilder();
@@ -54,15 +62,6 @@ public class CommonResourceService{
         log.recordUserAction(user, new Date(), sb.toString());
     }
 
-    public List<Resource> listAllAvailableResources(){
-        em.getTransaction().begin();
-        try {
-            TypedQuery<Resource> query = em.createNamedQuery("listAllAvailableResources", Resource.class);
-            return query.getResultList();
-        } finally {
-            em.getTransaction().rollback();
-        }
-    }
 
 
 }

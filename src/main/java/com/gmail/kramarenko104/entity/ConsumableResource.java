@@ -4,7 +4,10 @@ import javax.persistence.*;
 
 @Entity
 @Table (name = "consumable")
-
+@NamedQueries({
+        @NamedQuery(name = "listResourcesForConsumption", query = "select r from ConsumableResource r where r.leftAmount > 0"),
+        @NamedQuery(name = "listConsumedResources", query = "select r from ConsumableResource r where r.consumedAmount > 0")
+})
 public class ConsumableResource extends Resource {
 
     private int consumedAmount;

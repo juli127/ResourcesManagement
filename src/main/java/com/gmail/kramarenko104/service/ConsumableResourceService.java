@@ -1,9 +1,9 @@
 package com.gmail.kramarenko104.service;
 
 import com.gmail.kramarenko104.entity.ConsumableResource;
-import com.gmail.kramarenko104.entity.Resource;
 import com.gmail.kramarenko104.entity.User;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -31,7 +31,6 @@ public class ConsumableResourceService extends CommonResourceService {
         log.recordUserAction(user, new Date(), description);
     }
 
-
     public void consumeResource(User user, ConsumableResource resource, int consumeAmount){
         int tookAmount = super.getResource(resource, consumeAmount);
         String description = "User " + user.toString() +
@@ -42,41 +41,47 @@ public class ConsumableResourceService extends CommonResourceService {
         log.recordUserAction(user, new Date(), description);
     }
 
-    public ConsumableResource getConsumableResourcebyID(int id) {
-        ConsumableResource gotRes  = null;
-        em.getTransaction().begin();
-        try {
-            gotRes = em.find(ConsumableResource.class, id);
-            em.getTransaction().commit();
-            return gotRes;
-        } finally {
-            em.getTransaction().rollback();
-        }
-    }
-
-    /////////////////////////////////////////////////////////////////
-    public List<ConsumableResource> listResourcesForConsumption(){
-
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<ConsumableResource> cq = cb.createQuery(ConsumableResource.class);
-
-        Root e = cq.from(ConsumableResource.class);
-        // TODO
-
-        em.getTransaction().begin();
-        try {
-            return em.createQuery(cq).getResultList();
-        } finally {
-            em.getTransaction().rollback();
-        }
-    }
+    ///////////////////////////////////////////////////////////////////////
 
     public List<ConsumableResource> listConsumedResources(){
-        // TODO
-        return null;
+        em.getTransaction().begin();
+        try {
+            TypedQuery<ConsumableResource> query = em.createNamedQuery("listConsumedResources", ConsumableResource.class);
+            return query.getResultList();
+        } finally {
+            em.getTransaction().rollback();
+        }
+    }
+
+    public void printListConsumedResources(User user){
+        List<ConsumableResource> resources = listConsumedResources();
+        StringBuilder sb = new StringBuilder();
+        sb.append(user.toString() + " prints all ConsumedResources: ");
+        for (ConsumableResource resource : resources) {
+            sb.append("[" + resource.getName() + ", count: " + resource.getConsumed()+ "] ");
+        }
+        log.recordUserAction(user, new Date(), sb.toString());
     }
 
 
+    public List<ConsumableResource> listResourcesForConsumption(){
+        em.getTransaction().begin();
+        try {
+            TypedQuery<ConsumableResource> query = em.createNamedQuery("listResourcesForConsumption", ConsumableResource.class);
+            return query.getResultList();
+        } finally {
+            em.getTransaction().rollback();
+        }
+    }
 
+    public void printListResourcesForConsumption(User user){
+        List<ConsumableResource> resources = listResourcesForConsumption();
+        StringBuilder sb = new StringBuilder();
+        sb.append(user.toString() + " prints all resources for consumption: ");
+        for (ConsumableResource resource : resources) {
+            sb.append("[" + resource.getName() + ", count: " + resource.getLeftAmount()+ "] ");
+        }
+        log.recordUserAction(user, new Date(), sb.toString());
+    }
 
 }
