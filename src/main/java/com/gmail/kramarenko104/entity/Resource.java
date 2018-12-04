@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table (name = "resources")
 @Inheritance(strategy = InheritanceType.JOINED)
+@NamedQuery(name = "listAllAvailableResources", query = "select r from Resource r where r.leftAmount > 0")
 public abstract class Resource {
 
     @Id

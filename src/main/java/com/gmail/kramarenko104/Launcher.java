@@ -82,12 +82,15 @@ public class Launcher {
         // all these actions should be added to log
         consServ.consumeResource(user1, consRes1, 7);
         consServ.consumeResource(user2, consRes1, 5);
-        consServ.consumeResource(admin, consRes1, 150);
+        consServ.consumeResource(admin, consRes1, 10);
 
         rentServ.checkoutResource(user1, rentRes2, 2);
         rentServ.checkoutResource(user2, rentRes2, 89);
         rentServ.checkinResource(user1, rentRes2, 1);
         rentServ.writeOffResourceFromInventory(admin, rentRes2, 1);
+
+        CommonResourceService allServ = new CommonResourceService(log, em);
+        allServ.printListAllAvailableResources(admin);
     }
 
 }
