@@ -26,4 +26,8 @@ public class RentableResource extends Resource {
         super.addResource(addAmount);
         totalAmount += addAmount;
     }
+
+    public void checkinResource(int rentBackAmount) {
+        super.addResource(rentBackAmount);
+    }
 }

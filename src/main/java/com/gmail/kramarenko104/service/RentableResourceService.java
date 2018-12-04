@@ -36,6 +36,19 @@ public class RentableResourceService extends CommonResourceService {
         log.recordUserAction(user, new Date(), description);
     }
 
+    public void checkinResource(User user, RentableResource resource, int rentBackAmount){
+        em.getTransaction().begin();
+        resource.checkinResource(rentBackAmount);
+        em.merge(resource);
+        em.getTransaction().commit();
+
+        String description = "User " + user.toString() +
+                " returned " + rentBackAmount +
+                " of RentableResource " + resource.toString() +
+                ". Total count now: " + resource.getLeftAmount();
+        log.recordUserAction(user, new Date(), description);
+    }
+
     public RentableResource getRentableResourceById(int id) {
         em.getTransaction().begin();
         try {
