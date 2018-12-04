@@ -85,8 +85,8 @@ public class Launcher {
         consServ.consumeResource(user2, consRes1, 5);
         consServ.consumeResource(admin, consRes1, 150);
 
-        rentServ.rentResource(user1, rentRes2, 1);
-        rentServ.rentResource(user2, rentRes2, 100);
+        rentServ.checkoutResource(user1, rentRes2, 1);
+        rentServ.checkoutResource(user2, rentRes2, 100);
 
     }
 

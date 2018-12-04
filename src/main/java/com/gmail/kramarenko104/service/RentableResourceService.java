@@ -27,7 +27,7 @@ public class RentableResourceService extends CommonResourceService {
         log.recordUserAction(user, new Date(), description);
     }
 
-    public void rentResource(User user, RentableResource resource, int rentAmount){
+    public void checkoutResource(User user, RentableResource resource, int rentAmount){
         int tookAmount = super.getResource(resource, rentAmount);
         String description = "User " + user.toString() +
                 ((tookAmount > 0) ? " rented ":" couldn't rent ") +
