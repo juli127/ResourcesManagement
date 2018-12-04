@@ -57,6 +57,10 @@ public abstract class Resource {
         leftAmount += addAmount;
     }
 
+    public void removeResource(int amount){
+        leftAmount -= amount;
+    }
+
     @Override
     public String toString() {
         return "'" + getName() + "'";

@@ -30,4 +30,11 @@ public abstract class CommonResourceService {
         em.merge(resource);
         em.getTransaction().commit();
     }
+
+    public void removeResource(Resource resource, int amount){
+        em.getTransaction().begin();
+        resource.removeResource(amount);
+        em.merge(resource);
+        em.getTransaction().commit();
+    }
 }

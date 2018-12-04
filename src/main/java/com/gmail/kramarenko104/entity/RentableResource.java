@@ -30,4 +30,9 @@ public class RentableResource extends Resource {
     public void checkinResource(int rentBackAmount) {
         super.addResource(rentBackAmount);
     }
+
+    public void removeResource(int amount){
+        super.removeResource(amount);
+        totalAmount -= amount;
+    }
 }

@@ -79,7 +79,6 @@ public class Launcher {
         rentServ.addResourceToInventory(admin, rentRes3, 2);
 
         //////////////////////////////////////////////////////////////
-        // user asks Consumable Resources, Rentable Resources, save requests from user
         // all these actions should be added to log
         consServ.consumeResource(user1, consRes1, 7);
         consServ.consumeResource(user2, consRes1, 5);
@@ -88,6 +87,7 @@ public class Launcher {
         rentServ.checkoutResource(user1, rentRes2, 2);
         rentServ.checkoutResource(user2, rentRes2, 89);
         rentServ.checkinResource(user1, rentRes2, 1);
+        rentServ.writeOffResourceFromInventory(admin, rentRes2, 1);
     }
 
 }

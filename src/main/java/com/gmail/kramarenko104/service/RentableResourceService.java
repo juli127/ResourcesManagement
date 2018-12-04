@@ -23,7 +23,16 @@ public class RentableResourceService extends CommonResourceService {
         super.addResource(resource, amount);
         String description = "Admin added " + amount +
                 " of RentableResource " + resource.toString() +
-                ". Total count now: " + resource.getLeftAmount();
+                " to inventory. Total count now: " + resource.getTotalAmount();
+        log.recordUserAction(user, new Date(), description);
+    }
+
+    public void writeOffResourceFromInventory(User user, RentableResource resource, int amount){
+        super.removeResource(resource, amount);
+        String description = "Admin wrote Off " + amount +
+                " of RentableResource " + resource.toString() +
+                " from inventory. Total count now: " + resource.getTotalAmount() +
+                ((resource.getTotalAmount() == 0) ? ".... NOTHING LEFT !!! NEED TO BUY?": "");
         log.recordUserAction(user, new Date(), description);
     }
 
@@ -32,7 +41,7 @@ public class RentableResourceService extends CommonResourceService {
         String description = "User " + user.toString() +
                 ((tookAmount > 0) ? " rented ":" couldn't rent ") +
                 rentAmount + " of " + resource.toString()+
-                ((resource.getLeftAmount() == 0) ? ".... NOTHING LEFT !!! NEED TO BUY?": "");
+                ". Left to rent now: " + resource.getLeftAmount();
         log.recordUserAction(user, new Date(), description);
     }
 
@@ -45,7 +54,7 @@ public class RentableResourceService extends CommonResourceService {
         String description = "User " + user.toString() +
                 " returned " + rentBackAmount +
                 " of RentableResource " + resource.toString() +
-                ". Total count now: " + resource.getLeftAmount();
+                ". Left to rent now: " + resource.getLeftAmount();
         log.recordUserAction(user, new Date(), description);
     }
 
