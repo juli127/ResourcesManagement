@@ -83,18 +83,20 @@ public class Launcher {
         consServ.consumeResource(user1, consRes1, 7);
         consServ.consumeResource(user2, consRes1, 5);
         consServ.consumeResource(admin, consRes1, 10);
+        consServ.printListConsumedResources(admin);
+        consServ.printListResourcesForConsumption(admin);
 
+        ////////////////////
         rentServ.checkoutResource(user1, rentRes2, 2);
         rentServ.checkoutResource(user2, rentRes2, 89);
         rentServ.checkinResource(user1, rentRes2, 1);
         rentServ.writeOffResourceFromInventory(admin, rentRes2, 1);
+        rentServ.printListResourcesForRent(admin);
 
         // print to log list of all available resources
         CommonResourceService allServ = new CommonResourceService(log, em);
         allServ.printListAllAvailableResources(admin);
 
-        consServ.printListConsumedResources(admin);
-        consServ.printListResourcesForConsumption(admin);
     }
 
 }

@@ -1,10 +1,12 @@
 package com.gmail.kramarenko104.service;
 
+import com.gmail.kramarenko104.entity.ConsumableResource;
 import com.gmail.kramarenko104.entity.RentableResource;
 import com.gmail.kramarenko104.entity.User;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.Date;
+import java.util.List;
 
 public class RentableResourceService extends CommonResourceService {
 
@@ -58,16 +60,23 @@ public class RentableResourceService extends CommonResourceService {
         log.recordUserAction(user, new Date(), description);
     }
 
-    public RentableResource getRentableResourceById(int id) {
+    public List<RentableResource> listResourcesForRent(){
         em.getTransaction().begin();
         try {
-            String queryText = "select e from RentableResource e where e.id = :id";
-            TypedQuery<RentableResource> query = em.createQuery(queryText, RentableResource.class);
-            query.setParameter("id", id);
-            return query.getSingleResult();
+            TypedQuery<RentableResource> query = em.createNamedQuery("listResourcesForRent", RentableResource.class);
+            return query.getResultList();
         } finally {
             em.getTransaction().rollback();
         }
     }
 
+    public void printListResourcesForRent(User user){
+        List<RentableResource> resources = listResourcesForRent();
+        StringBuilder sb = new StringBuilder();
+        sb.append(user.toString() + " prints all resources for rent: ");
+        for (RentableResource resource : resources) {
+            sb.append("[" + resource.getName() + ", count: " + resource.getLeftAmount()+ "] ");
+        }
+        log.recordUserAction(user, new Date(), sb.toString());
+    }
 }

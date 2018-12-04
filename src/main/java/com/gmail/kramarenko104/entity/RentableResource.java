@@ -1,10 +1,12 @@
 package com.gmail.kramarenko104.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "rentable")
+@NamedQuery(name = "listResourcesForRent", query = "select r from RentableResource r where r.leftAmount > 0")
 public class RentableResource extends Resource {
 
     private int totalAmount;
