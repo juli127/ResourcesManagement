@@ -76,19 +76,19 @@ public class Launcher {
         RentableResource rentRes3 = new RentableResource();
         rentRes3.setId(6);
         rentRes3.setName("book1");
-        rentServ.addResourceToInventory(admin, rentRes3, 2);
+        rentServ.addResourceToInventory(admin, rentRes3, 256);
 
         //////////////////////////////////////////////////////////////
         // all these actions should be added to log
         consServ.consumeResource(user1, consRes1, 7);
         consServ.consumeResource(user2, consRes1, 5);
-        consServ.consumeResource(admin, consRes1, 10);
+        consServ.consumeResource(admin, consRes1, 150);
         consServ.printListConsumedResources(admin);
         consServ.printListResourcesForConsumption(admin);
 
         ////////////////////
         rentServ.checkoutResource(user1, rentRes2, 2);
-        rentServ.checkoutResource(user2, rentRes2, 89);
+        rentServ.checkoutResource(user2, rentRes2, 80);
         rentServ.checkinResource(user1, rentRes2, 1);
         rentServ.writeOffResourceFromInventory(admin, rentRes2, 1);
         rentServ.printListResourcesForRent(admin);

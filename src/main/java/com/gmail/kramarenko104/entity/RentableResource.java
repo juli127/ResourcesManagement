@@ -1,17 +1,20 @@
 package com.gmail.kramarenko104.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "rentable")
-@NamedQuery(name = "listResourcesForRent", query = "select r from RentableResource r where r.leftAmount > 0")
+@NamedQueries({
+        @NamedQuery(name = "listResourcesForRent", query = "select r from RentableResource r where r.leftAmount > 0"),
+})
 public class RentableResource extends Resource {
 
     private int totalAmount;
 
-    public RentableResource(){
+    public RentableResource() {
         super();
     }
 
@@ -33,7 +36,7 @@ public class RentableResource extends Resource {
         super.addResource(rentBackAmount);
     }
 
-    public void removeResource(int amount){
+    public void removeResource(int amount) {
         super.removeResource(amount);
         totalAmount -= amount;
     }

@@ -1,6 +1,5 @@
 package com.gmail.kramarenko104.service;
 
-import com.gmail.kramarenko104.entity.ConsumableResource;
 import com.gmail.kramarenko104.entity.RentableResource;
 import com.gmail.kramarenko104.entity.User;
 import javax.persistence.EntityManager;
@@ -34,6 +33,7 @@ public class RentableResourceService extends CommonResourceService {
         String description = "Admin wrote Off " + amount +
                 " of RentableResource " + resource.toString() +
                 " from inventory. Total count now: " + resource.getTotalAmount() +
+                ". Left to rent now: " + resource.getLeftAmount() +
                 ((resource.getTotalAmount() == 0) ? ".... NOTHING LEFT !!! NEED TO BUY?": "");
         log.recordUserAction(user, new Date(), description);
     }
@@ -79,4 +79,5 @@ public class RentableResourceService extends CommonResourceService {
         }
         log.recordUserAction(user, new Date(), sb.toString());
     }
+
 }
