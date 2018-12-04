@@ -64,26 +64,29 @@ public class Launcher {
 
         // all these actions should be added to log
         RentableResource rentRes1 = new RentableResource();
+        rentRes1.setId(4);
         rentRes1.setName("table");
         rentServ.addResourceToInventory(admin, rentRes1, 345);
 
         RentableResource rentRes2 = new RentableResource();
+        rentRes2.setId(5);
         rentRes2.setName("computer ASUS-34");
         rentServ.addResourceToInventory(admin, rentRes2, 89);
 
         RentableResource rentRes3 = new RentableResource();
+        rentRes3.setId(6);
         rentRes3.setName("book1");
         rentServ.addResourceToInventory(admin, rentRes3, 2);
 
         //////////////////////////////////////////////////////////////
-        // user asks ConsumableResource, save request from user
-        /// this action should be added to log
+        // user asks Consumable Resources, Rentable Resources, save requests from user
+        // all these actions should be added to log
         consServ.consumeResource(user1, consRes1, 7);
         consServ.consumeResource(user2, consRes1, 5);
         consServ.consumeResource(admin, consRes1, 150);
 
         rentServ.rentResource(user1, rentRes2, 1);
-       // rentServ.rentResource(user2, rentRes3, 3);
+        rentServ.rentResource(user2, rentRes2, 100);
 
     }
 
